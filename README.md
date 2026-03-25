@@ -1,7 +1,9 @@
 # OIR Flatmount Segmentation (Hartnett Lab)
 
 ### **Authors**
-Neal S. Shah*, Aniket Ramshekar*, Bright Asare-Bediako, Morgan P. Tankersley, Heng-Chiao Huang, Shreya Beri, Eric Kunz, Aaron Y. Lee, M. Elizabeth Hartnett, Byers Eye Institute Department of Ophthalmology, Stanford University School of Medicine, Stanford, CA, USA
+Neal S. Shah*, Aniket Ramshekar*, Bright Asare-Bediako, Morgan P. Tankersley, Heng-Chiao Huang, Shreya Beri, Eric Kunz, Aaron Y. Lee, M. Elizabeth Hartnett
+
+Byers Eye Institute Department of Ophthalmology, Stanford University School of Medicine, Stanford, CA, USA
 
 ### **Tags**
 Segmentation, Retinal Flatmount, Oxygen-Induced Retinopathy, OIR, Mouse, Rat, Intravitreal Neovascularization, Avascular Area
