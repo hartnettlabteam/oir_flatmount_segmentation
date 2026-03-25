@@ -1,51 +1,40 @@
-# oir_flatmount_segmentation
+# OIR Flatmount Segmentation (Hartnett Lab)
 
-Hartnett Lab model bundle for segmentation of oxygen-induced retinopathy (OIR) retinal flatmount images.
+### **Authors**
+Neal S. Shah*, Aniket Ramshekar*, Bright Asare-Bediako, Morgan P. Tankersley, Heng-Chiao Huang, Shreya Beri, Eric Kunz, Aaron Y. Lee, M. Elizabeth Hartnett, Byers Eye Institute Department of Ophthalmology, Stanford University School of Medicine, Stanford, CA, USA
 
-This model segments three regions:
+### **Tags**
+Segmentation, Retinal Flatmount, Oxygen-Induced Retinopathy, OIR, Mouse, Rat, Intravitreal Neovascularization, Avascular Area
 
-- Total Retina (TR)
-- Intravitreal Neovascularization (IVNV)
-- Avascular Area (AVA)
+## **Model Description**
+This model performs automated segmentation of oxygen-induced retinopathy (OIR) retinal flatmount images into three regions: total retina (TR), intravitreal neovascularization (IVNV), and avascular area (AVA).  
+The architecture is a multi-task Attention U-Net with a ConvNeXt-Tiny encoder and deep supervision (~8.7M trainable parameters).  
+For inference, the final release uses an ensemble of 5 cross-validation models, with test-time augmentation and per-class thresholding, to improve robustness across mouse and rat OIR images.
 
-## Repository Contents
+## **Data**
+Model development used three datasets:
 
-- `configs/metadata.json`: model metadata, package requirements, and input/output definitions.
-- `configs/inference.json`: MONAI inference config with required bundle keys.
-- `configs/train.json`: MONAI training config template and key naming conventions.
-- `docs/README.md`: detailed model card (method, intended use, limitations).
-- `docs/data_license.txt`: dataset and data-use notes.
-- `large_files.yml`: external download links for large checkpoint files.
-- `weights/fold_*/thresholds.json`: threshold files used for class binarization.
-- `scripts/plot_learning_curves.py`: utility for fold-level learning curve plotting.
-- `models/`: placeholder directory for model artifacts.
+1. **Rat IVNV pretraining dataset:** 72 rat OIR flatmount images with IVNV-only annotations (used in intermediate Stage 2 training).
+2. **Final development dataset:** 345 annotated images total (267 mouse, 78 rat), including:
+   - 127 expert human-annotated images (49 mouse, 78 rat)
+   - 218 curated open-source mouse images with reviewed masks
+3. **Independent test dataset:** 37 images (18 mouse OIR, 19 rat OIR), held out from training/validation/model selection.
 
-## Model Weights
+For final model development, a modified 5-fold cross-validation strategy was used, with expert-annotated images serving as fold-level validation references and curated open-source mouse images used in training only.
 
-Checkpoint files (`.pth`) are not stored directly in this repository because of file size limits.  
-They are hosted as release assets and referenced in `large_files.yml`.
+#### **Preprocessing**
+Input images are converted to grayscale, resized to 512 x 512, and intensity-normalized before model inference/training.  
+Training-time augmentation includes flips, rotations, contrast/brightness changes, and noise injection.
 
-Weights for this release are available at:
+## **Performance**
 
-- [v1.0.0 release assets](https://github.com/hartnettlabteam/oir_flatmount_segmentation/releases/tag/v1.0.0)
+Dice agreement between model masks and human consensus masks was high for total retina (TR) and AVA, and moderate for IVNV in both species:
+- Rat: TR Dice=0.983, AVA Dice=0.924, IVNV Dice=0.612
+- Mouse: TR Dice=0.975, AVA Dice=0.912, IVNV Dice=0.601
 
-## Intended Use
+At the metric level, the deep learning model showed strong correlation with the mean of three graders for rat percent AVA (r=0.979) and rat percent IVNV (r=0.943). In mouse OIR, correlation was strong for percent AVA (r=0.957) but weak for percent IVNV (r=0.265), likely due to high inter-grader variability for mouse IVNV scoring.
 
-- Research use for preclinical OIR flatmount analysis in mouse and rat datasets.
-- Automated support for segmentation and derived TR/IVNV/AVA area metrics.
+(For full analyses, confidence intervals, and subgroup details, refer to manuscript/report tables.)
 
-Not intended for direct clinical diagnosis or treatment decisions.
-
-## MONAI Model Zoo
-
-This repository is structured as a MONAI bundle and is prepared for MONAI Model Zoo submission.  
-For full technical details, see `docs/README.md`.
-
-## Citation and Contact
-
-If you use this model, please cite the associated Hartnett Lab manuscript and repository release.
-
-Contact:
-- Neal Shah: neals1@stanford.edu
-- Aniket Ramshekar: aniket.ramshekar@stanford.edu
-- M. Elizabeth Hartnett: me.hartnett@stanford.edu
+## **Additional Usage Steps** 
+Model checkpoints are hosted externally and linked through `large_files.yml` (not committed directly in the repo due to file size limits).  
