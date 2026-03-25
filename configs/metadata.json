@@ -42,14 +42,13 @@
     }
   },
   "schema": "https://raw.githubusercontent.com/Project-MONAI/model-zoo/dev/monai_bundle_schemas/metadata_schema.json",
-  "required_packages_version": {
+  "optional_packages_version": {
     "timm": "",
     "albumentations": "",
     "opencv-python": "",
     "pandas": "",
     "matplotlib": "",
-    "openpyxl": "",
-    "pyside6": ""
+    "openpyxl": ""
   }
 }
 
