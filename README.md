@@ -25,8 +25,8 @@ Model development used three datasets:
 For final model development, a modified 5-fold cross-validation strategy was used, with expert-annotated images serving as fold-level validation references and curated open-source mouse images used in training only.
 
 #### **Preprocessing**
-Input images are converted to grayscale, resized to 512 x 512, and intensity-normalized before model inference/training.  
-Training-time augmentation includes flips, rotations, contrast/brightness changes, and noise injection.
+Input retinal flatmount images were converted to grayscale, resized to 512×512, and intensity-normalized.  
+During training, joint image-mask augmentation was applied using random horizontal/vertical flips, random rotations (up to 180 degrees), brightness/contrast perturbation, CLAHE, Gaussian noise, elastic/grid/optical distortions, coarse dropout, motion blur, and random gamma adjustments.
 
 ## **Performance**
 
@@ -36,7 +36,10 @@ Dice agreement between model masks and human consensus masks was high for total 
 
 At the metric level, the deep learning model showed strong correlation with the mean of three graders for rat percent AVA (r=0.979) and rat percent IVNV (r=0.943). In mouse OIR, correlation was strong for percent AVA (r=0.957) but weak for percent IVNV (r=0.265), likely due to high inter-grader variability for mouse IVNV scoring.
 
-(For full analyses, confidence intervals, and subgroup details, refer to manuscript/report tables.)
+(For full analysis please refer to the manuscript.)
+
+## **System Configuration**
+This model was trained on an Apple M2 pro 16GB Macbook. 5-fold cross-validation was run sequentially with batch size 4 and a maximum of 120 epochs per fold. The folds ran for 86, 88, 120, 61, and 80 epochs, with total training time of approximately 24 hours.
 
 ## **Additional Usage Steps** 
 Model checkpoints are hosted externally and linked through `large_files.yml` (not committed directly in the repo due to file size limits).  
