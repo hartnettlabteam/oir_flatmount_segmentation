@@ -9,7 +9,7 @@ Byers Eye Institute Department of Ophthalmology, Stanford University School of M
 Segmentation, Retinal Flatmount, Oxygen-Induced Retinopathy, OIR, Mouse, Rat, Intravitreal Neovascularization, Avascular Area
 
 ## **Model Description**
-This model performs automated segmentation of oxygen-induced retinopathy (OIR) retinal flatmount images into three regions: total retina (TR), intravitreal neovascularization (IVNV), and avascular area (AVA).  
+This is a repo to download model weight checkpoints for our model that can be found on the MONAI model zoo. This model performs automated segmentation of oxygen-induced retinopathy (OIR) retinal flatmount images into three regions: total retina (TR), intravitreal neovascularization (IVNV), and avascular area (AVA).  
 The architecture is a multi-task Attention U-Net with a ConvNeXt-Tiny encoder [1] and deep supervision (~8.7M trainable parameters).  
 For inference, the final release uses an ensemble of 5 cross-validation models, with test-time augmentation and per-class thresholding, to improve robustness across mouse and rat OIR images.
 
